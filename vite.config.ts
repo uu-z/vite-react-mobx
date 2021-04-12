@@ -1,23 +1,13 @@
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
-import { getAliases } from 'vite-aliases';
-import vitePluginImp from 'vite-plugin-imp';
-
-const aliases = getAliases();
+import path from 'path';
 
 export default defineConfig({
-  plugins: [
-    reactRefresh(),
-    vitePluginImp({
-      libList: [
-        {
-          libName: 'antd',
-          style: (name) => `antd/lib/${name}/style/index.css`
-        }
-      ]
-    })
-  ],
+  plugins: [reactRefresh()],
   resolve: {
-    alias: aliases
+    alias: {
+      '~': path.resolve(__dirname, './'), // 根路径
+      '@': path.resolve(__dirname, 'src')
+    }
   }
 });

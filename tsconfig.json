@@ -16,7 +16,13 @@
     "noImplicitAny": false,
     "noEmit": true,
     "jsx": "react",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "@/store/*": ["store/*"],
+      "@/components/*": ["components/*"],
+      "@/utils/*": ["utils/*"],
+      "@/lib/*": ["lib/*"]
+    }
   },
   "include": ["src", "cypress"]
 }
