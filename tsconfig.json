@@ -7,8 +7,9 @@
     "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
@@ -17,11 +18,15 @@
     "noEmit": true,
     "jsx": "react",
     "baseUrl": "src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "paths": {
       "@/store/*": ["store/*"],
       "@/components/*": ["components/*"],
       "@/utils/*": ["utils/*"],
-      "@/lib/*": ["lib/*"]
+      "@/lib/*": ["lib/*"],
+      "@/constants/*": ["constants/*"]
+
     }
   },
   "include": ["src", "cypress"]

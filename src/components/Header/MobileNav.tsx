@@ -27,9 +27,9 @@ export const MobileNav = ({ isOpen }: MobileNavProps) => {
         backgroundColor: useColorModeValue('rgba(255, 255, 255, 0.8)', 'rgba(26, 32, 44, 0.8)')
       }}
     >
-      {NAV_ITEMS.map((navItem) => (
+      {/* {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
-      ))}
+      ))} */}
     </Stack>
   );
 };

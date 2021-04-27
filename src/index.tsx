@@ -1,27 +1,62 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { Home } from './pages/Home';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useStore } from '@/store/index';
 import { Header } from '@/components/Header/index';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Button, Container, Center, CSSReset } from '@chakra-ui/react';
 import { theme } from '@/lib/theme';
-import Footer from '@/components/Footer';
+import { ETHProvider } from './components/EthProvider';
+import { Home } from './pages/Home/index';
+import { Web3ReactProvider } from '@web3-react/core';
+import { getLibrary } from './lib/web3-react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Box, Text } from '@chakra-ui/layout';
+import { Toaster } from 'react-hot-toast';
+import { ToolConfig } from './config/ToolConfig';
+import { Connector } from './components/Connector/index';
+import { IotexProvider } from './components/IotexProvider/index';
+
+const ErrorFallback = ({ error, resetErrorBoundary }) => {
+  return (
+    <Container role="alert">
+      <Center h="500px">
+        <Box>
+          <p>Something went wrong:</p>
+          <Text color="red.500">{error.message}</Text>
+          <Button onClick={resetErrorBoundary}>Try again</Button>
+        </Box>
+      </Center>
+    </Container>
+  );
+};
 
 export const App = observer(() => {
-  const { lang } = useStore();
+  const { lang, god } = useStore();
   useEffect(() => {
     lang.init();
   }, []);
+
   return (
     <ChakraProvider theme={theme}>
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/" exact component={Home} />
-        </Switch>
-        <Footer />
-      </Router>
+      <CSSReset />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <Connector />
+          <ETHProvider />
+          <Toaster />
+          <Router>
+            <Header />
+            <Switch>
+              <Route path="/" exact>
+                <Home key={god.network.currentId.value} />
+              </Route>
+              {ToolConfig.map((item) => (
+                <Route exact path={item.path} key={item.path} component={item.component} />
+              ))}
+            </Switch>
+          </Router>
+        </Web3ReactProvider>
+      </ErrorBoundary>
     </ChakraProvider>
   );
 });

@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import { Logo } from '../Logo';
 import { DesktopNav } from '@/components/Header/DesktopNav';
 import { MobileNav } from '@/components/Header/MobileNav';
+import { observer } from 'mobx-react-lite';
+import { WalletInfo } from '../WalletInfo';
 
-export const Header = () => {
+export const Header = observer(() => {
   const { isOpen: isMobileNavOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -39,7 +41,7 @@ export const Header = () => {
           </Flex>
 
           <Flex flex={{ base: 1, md: 'auto' }} justify={{ base: 'center', md: 'start' }}>
-            <Link href={'/'} passHref>
+            <Link to={'/'}>
               <Stack as={'a'} direction={'row'} alignItems={'center'} spacing={{ base: 2, sm: 4 }}>
                 <Icon as={Logo} w={{ base: 8 }} h={{ base: 8 }} />
                 <Heading as={'h1'} fontSize={'xl'} display={{ base: 'none', md: 'block' }}>
@@ -62,6 +64,7 @@ export const Header = () => {
         </Container>
       </Flex>
       <MobileNav isOpen={isMobileNavOpen} />
+      <WalletInfo />
     </Box>
   );
-};
+});

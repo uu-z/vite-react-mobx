@@ -1,3 +1,6 @@
 {
-  "hello": "hello ${msg}"
+  "hello": "hello ${msg}",
+  "wrong.network": "Wrong Network",
+  "connect.wallet": "Connect Wallet",
+  "address.copied": "The address is copied."
 }

@@ -1,11 +1,7 @@
+import { RootStore } from './root';
 import React from 'react';
-import { LangStore } from './lang';
-import { BaseStore } from './base';
 
-export const rootStore = {
-  base: new BaseStore(),
-  lang: new LangStore()
-};
+export const rootStore = new RootStore();
 
 const StoresContext = React.createContext(rootStore);
 

@@ -9,5 +9,8 @@ export default defineConfig({
       '~': path.resolve(__dirname, './'), // 根路径
       '@': path.resolve(__dirname, 'src')
     }
+  },
+  define: {
+    'process.env': process.env
   }
 });
