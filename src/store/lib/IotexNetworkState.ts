@@ -102,8 +102,8 @@ export class IotexNetworkState implements NetworkState {
     params?: any[];
     options?: any;
   }): Promise<Partial<TransactionResponse>> {
-    const contract = new Contract(abi, address, { provider: this.antenna!.iotx });
-    const hash = await contract.methods[method](...params, options);
+    const contract = new Contract(abi, address, { provider: this.antenna!.iotx, signer: this.antenna!.iotx.signer });
+    const hash = await contract.methods[method](...params, Object.assign({ gasLimit: '2000000', gasPrice: '1000000000000' }, options));
     const wait = () =>
       new Promise<void>((resolve, reject) => {
         retry(
@@ -114,11 +114,8 @@ export class IotexNetworkState implements NetworkState {
           { minTimeout: 5000, maxTimeout: 5000 }
         ).then(
           (res: any) => {
-            if (res.receiptInfo.receipt.status == 1) {
-              resolve(res);
-            } else {
-              reject();
-            }
+            res.status = res.receiptInfo.receipt.status;
+            resolve(res);
           },
           () => {
             reject();
@@ -130,7 +127,12 @@ export class IotexNetworkState implements NetworkState {
   }
   async multicall(calls: CallParams[]): Promise<any[]> {
     //@ts-ignore
-    const res = await this.multiCall.batch(calls.map((i) => calls));
+    const res = await this.multiCall.batch(
+      calls.map((i) => {
+        const { abi, address, method, params } = i;
+        return { abi, address, method, params };
+      })
+    );
     res.forEach((v, i) => {
       const callback = calls[i].handler;
       if (typeof callback == 'function') {
