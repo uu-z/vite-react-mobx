@@ -2,9 +2,9 @@ import { NetworkState } from './NetworkState';
 import { makeAutoObservable } from 'mobx';
 import Antenna from 'iotex-antenna';
 import { IotexMulticall } from '../../lib/multicall';
-import { MappingState } from './MappingState';
+import { MappingState } from '../standard/MappingState';
 import { ChainState } from './ChainState';
-import { StorageState } from './StorageState';
+import { StorageState } from '../standard/StorageState';
 import BigNumber from 'bignumber.js';
 import { WsSignerPlugin } from 'iotex-antenna/lib/plugin/ws';
 import { validateAddress } from 'iotex-antenna/lib/account/utils';
@@ -12,7 +12,7 @@ import { TransactionResponse } from '@ethersproject/providers';
 import { Contract } from 'iotex-antenna/lib/contract/contract';
 import retry from 'promise-retry';
 import { GodStore } from '../god';
-import { CallParams } from './type';
+import { CallParams } from '../../../type';
 
 export enum IotexConnector {
   IopayDesktop = 'iopay-desktop',
@@ -89,27 +89,22 @@ export class IotexNetworkState implements NetworkState {
     return antenna;
   }
 
-  async execContract({
-    address,
-    abi,
-    method,
-    params = [],
-    options = {}
-  }: {
-    address: string;
-    abi: any;
-    method: string;
-    params?: any[];
-    options?: any;
-  }): Promise<Partial<TransactionResponse>> {
-    const contract = new Contract(abi, address, { provider: this.antenna!.iotx, signer: this.antenna!.iotx.signer });
-    const hash = await contract.methods[method](...params, Object.assign({ gasLimit: '2000000', gasPrice: '1000000000000' }, options));
+  async execContract({ address, abi, method, params = [], options = {}, read }: CallParams): Promise<Partial<TransactionResponse>> {
+    const contract = new Contract(abi, address, { provider: this.antenna.iotx, signer: this.antenna.iotx.signer });
+    const { value, ..._options } = options;
+    const hash = await contract.methods[method](
+      ...params,
+      Object.assign({ gasLimit: '2000000', gasPrice: '1000000000000', account: this.account, amount: value || '0' }, _options)
+    );
+    if (read) {
+      return hash;
+    }
     const wait = () =>
-      new Promise<void>((resolve, reject) => {
+      new Promise((resolve, reject) => {
         retry(
           //@ts-ignore
           (retry) => {
-            return this.antenna!.iotx.getReceiptByAction({ actionHash: hash }).catch(retry);
+            return this.antenna.iotx.getReceiptByAction({ actionHash: hash }).catch(retry);
           },
           { minTimeout: 5000, maxTimeout: 5000 }
         ).then(

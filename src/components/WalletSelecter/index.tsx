@@ -6,9 +6,8 @@ import { injected } from '../../lib/web3-react';
 import { Modal, ModalContent, ModalOverlay } from '@chakra-ui/modal';
 import { Box, Flex, Text } from '@chakra-ui/layout';
 import { Image, Button } from '@chakra-ui/react';
-import { IotexConnector } from '../../store/lib/IotexNetworkState';
 
-export const Connector = observer(() => {
+export const WalletSelecter = observer(() => {
   const { god } = useStore();
   const { activate } = useWeb3React();
 

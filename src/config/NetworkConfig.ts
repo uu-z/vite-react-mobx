@@ -1,5 +1,5 @@
 import { BSCMainnetConfig } from './BSCMainnetConfig';
-import { MappingState } from '@/store/lib/MappingState';
+import { MappingState } from '@/store/standard/MappingState';
 import { EthNetworkState } from '../store/lib/EthNetworkState';
 import { ETHKovanConfig } from './ETHKovanConfig';
 import { ETHMainnetConfig } from './ETHMainnetConfig';

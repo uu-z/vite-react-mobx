@@ -5,7 +5,6 @@ import { useWeb3React } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { Connector } from '../Connector';
 import { ETHMainnetConfig } from '../../config/ETHMainnetConfig';
 import { Provider as MulticallProvider } from 'ethers-multicall';
 import { injected } from '@/lib/web3-react';
@@ -50,7 +49,7 @@ export const ETHProvider = observer(({ children }) => {
       }
     } else {
       // god.currentNetwork.chain.setCurrentId(BSCMainnetConfig.chainId);
-      store.wrongNetwork();
+      // store.wrongNetwork();
     }
 
     god.currentNetwork.account = account;
@@ -64,10 +63,13 @@ export const ETHProvider = observer(({ children }) => {
       god.eth.multiCall._multicallAddress = god.currentChain.info.multicallAddr;
     }
 
+    //@ts-ignore
+    console.log(god.eth.multiCall._multicallAddress);
     if (account) {
       god.setShowConnecter(false);
-      god.loadBalance();
+      god.currentNetwork.loadBalance();
     }
+    god.updateTicker.setValue(god.updateTicker.value + 1);
   }, [god, library, chainId, account, active, error]);
 
   useEffect(() => {

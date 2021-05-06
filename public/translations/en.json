@@ -2,5 +2,7 @@
   "hello": "hello ${msg}",
   "wrong.network": "Wrong Network",
   "connect.wallet": "Connect Wallet",
-  "address.copied": "The address is copied."
+  "address.copied": "The address is copied.",
+  "invalid.input": "Invalid Input",
+  "submit": "Submit"
 }

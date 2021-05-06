@@ -3,11 +3,11 @@ import { makeAutoObservable } from 'mobx';
 import { ethers, Contract, Signer } from 'ethers';
 import { JsonRpcProvider, TransactionResponse, Web3Provider } from '@ethersproject/providers';
 import { Contract as MuticallContract, Provider as MulticallProvider } from 'ethers-multicall';
-import { MappingState } from './MappingState';
+import { MappingState } from '../standard/MappingState';
 import { ChainState } from './ChainState';
-import { StorageState } from './StorageState';
+import { StorageState } from '../standard/StorageState';
 import BigNumber from 'bignumber.js';
-import { CallParams } from './type';
+import { CallParams } from '../../../type';
 import { GodStore } from '../god';
 
 export class EthNetworkState implements NetworkState {

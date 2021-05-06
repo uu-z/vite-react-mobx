@@ -29,5 +29,5 @@
 
     }
   },
-  "include": ["src", "cypress"]
+  "include": ["src", "cypress", "type.ts"]
 }

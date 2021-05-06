@@ -1,12 +1,13 @@
 import { NetworkState } from './lib/NetworkState';
 import { makeAutoObservable } from 'mobx';
-import { MappingState, MappingStorageState } from './lib/MappingState';
+import { MappingState, MappingStorageState } from './standard/MappingState';
 import { EthNetworkConfig, IotexNetworkConfig } from '../config/NetworkConfig';
 import { ChainState } from './lib/ChainState';
 import { EthNetworkState } from './lib/EthNetworkState';
 import { IotexNetworkState } from './lib/IotexNetworkState';
 import { RootStore } from './root';
-import { StorageState } from './lib/StorageState';
+import { StorageState } from './standard/StorageState';
+import { NumberState } from './standard/base';
 
 export type Network = 'eth' | 'bsc' | 'iotex';
 
@@ -20,6 +21,8 @@ export class GodStore {
       iotex: EthNetworkConfig
     }
   });
+
+  updateTicker = new NumberState();
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
@@ -63,10 +66,6 @@ export class GodStore {
   }
   setChain(val: number) {
     this.currentNetwork.chain.setCurrentId(val);
-  }
-
-  async loadBalance() {
-    this.currentNetwork.loadBalance();
   }
   setShowConnecter(value: boolean) {
     // this.currentNetwork.connector.showConnector = value;

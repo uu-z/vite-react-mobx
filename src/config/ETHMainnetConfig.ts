@@ -13,6 +13,7 @@ export const ETHMainnetConfig = new ChainState({
     decimals: 18
   }),
   info: {
-    blockPerSeconds: 13
+    blockPerSeconds: 13,
+    multicallAddr: '0xeefba1e63905ef1d7acba5a8513c70307c1ce441'
   }
 });

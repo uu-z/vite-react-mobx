@@ -1,8 +1,9 @@
 import { ChainState } from './ChainState';
-import { MappingState } from './MappingState';
-import { StorageState } from './StorageState';
+import { MappingState } from '../standard/MappingState';
+import { StorageState } from '../standard/StorageState';
 import { TransactionResponse } from '@ethersproject/providers';
 import { GodStore } from '../god';
+import { CallParams } from '../../../type';
 
 export interface NetworkState {
   god: GodStore;
@@ -16,7 +17,7 @@ export interface NetworkState {
     [key: string]: any;
   };
 
-  multicall(calls: { address: string; abi: any; method: string; params?: any[] }[]): Promise<any[]>;
+  multicall(calls: Partial<CallParams>[]): Promise<any[]>;
   loadBalance: Function;
   execContract(call: { address: string; abi: any; method: string; params?: any[]; options?: any }): Promise<Partial<TransactionResponse>>;
   isAddressaVailable(address: string): boolean;

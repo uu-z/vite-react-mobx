@@ -13,8 +13,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { Box, Text } from '@chakra-ui/layout';
 import { Toaster } from 'react-hot-toast';
 import { ToolConfig } from './config/ToolConfig';
-import { Connector } from './components/Connector/index';
-import { IotexProvider } from './components/IotexProvider/index';
+import { WalletSelecter } from './components/WalletSelecter/index';
 
 const ErrorFallback = ({ error, resetErrorBoundary }) => {
   return (
@@ -41,7 +40,7 @@ export const App = observer(() => {
       <CSSReset />
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Web3ReactProvider getLibrary={getLibrary}>
-          <Connector />
+          <WalletSelecter />
           <ETHProvider />
           <Toaster />
           <Router>

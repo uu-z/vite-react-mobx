@@ -5,4 +5,5 @@ export interface CallParams {
   params?: any[];
   options?: any;
   handler?: any;
+  read?: boolean;
 }

@@ -1,13 +1,18 @@
 import { makeObservable, observable } from 'mobx';
 import { NetworkState } from './NetworkState';
-import BigNumber from 'bignumber.js';
-import { BigNumberState } from './BigNumberState';
+import { BigNumberState } from '../standard/BigNumberState';
+import { CallParams } from '../../../type';
+import erc20Abi from '@/constants/abi/erc20.json';
 
 export class TokenState {
-  address: string;
-  abi: any;
-  decimals: number;
+  abi = erc20Abi;
+  name: string;
   symbol: string;
+  address: string;
+  logoURI: string;
+  chainId: number;
+  decimals: number;
+
   network: NetworkState;
   balance: BigNumberState;
   metas: {
@@ -22,7 +27,14 @@ export class TokenState {
     });
   }
 
-  parseValue({ value, fixed = 6 }: { value: any; fixed?: number }) {
-    return new BigNumber(value).dividedBy(10 ** this.decimals).toFixed(fixed, 1);
+  transfer(args: Partial<CallParams>) {
+    return this.network.execContract(Object.assign({ address: this.address, abi: this.abi, method: 'transfer' }, args));
+  }
+  approve(args: Partial<CallParams>) {
+    return this.network.execContract(Object.assign({ address: this.address, abi: this.abi, method: 'approve' }, args));
+  }
+
+  preMulticall(args: Partial<CallParams>) {
+    return Object.assign({ address: this.address, abi: this.abi }, args);
   }
 }
