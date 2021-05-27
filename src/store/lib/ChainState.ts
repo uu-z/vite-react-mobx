@@ -5,6 +5,7 @@ import { TokenState } from './TokenState';
 export class ChainState {
   name: string;
   network: NetworkState;
+  networkKey: string;
   chainId: number;
   logoUrl: string;
   rpcUrl: string;

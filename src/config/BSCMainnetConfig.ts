@@ -4,6 +4,7 @@ import { TokenState } from '@/store/lib/TokenState';
 export const BSCMainnetConfig = new ChainState({
   name: 'BSC',
   chainId: 56,
+  networkKey: 'bsc',
   rpcUrl: 'https://bsc-dataseed.binance.org',
   logoUrl: '/images/bsc_logo.svg',
   explorerURL: 'https://bscscan.com',

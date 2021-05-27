@@ -7,6 +7,8 @@ import { EthNetworkState } from './lib/EthNetworkState';
 import { IotexNetworkState } from './lib/IotexNetworkState';
 import { RootStore } from './root';
 import { NumberState } from './standard/base';
+import { metamaskUtils } from '../lib/metaskUtils';
+import toast from 'react-hot-toast';
 
 export type Network = 'eth' | 'bsc' | 'iotex';
 

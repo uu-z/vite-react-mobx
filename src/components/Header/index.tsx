@@ -1,11 +1,10 @@
 import React from 'react';
-import { Box, Flex, Container, Stack, useDisclosure, IconButton, useColorModeValue, Icon, useColorMode, Heading } from '@chakra-ui/react';
+import { Box, Flex, Container, Stack, useDisclosure, IconButton, useColorModeValue, Icon, useColorMode, Heading, Alert, AlertIcon, Text } from '@chakra-ui/react';
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { IoMoon, IoSunny } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { Logo } from '../Logo';
 import { DesktopNav } from '@/components/Header/DesktopNav';
-import { MobileNav } from '@/components/Header/MobileNav';
 import { observer } from 'mobx-react-lite';
 import { WalletInfo } from '../WalletInfo';
 
@@ -31,13 +30,7 @@ export const Header = observer(() => {
       >
         <Container as={Flex} maxW={'7xl'} align={'center'}>
           <Flex flex={{ base: 1, md: 'auto' }} ml={{ base: -2 }} display={{ base: 'flex', md: 'none' }}>
-            <IconButton
-              onClick={onToggle}
-              icon={isMobileNavOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
-              variant={'ghost'}
-              size={'sm'}
-              aria-label={'Toggle Navigation'}
-            />
+            <IconButton onClick={onToggle} icon={isMobileNavOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />} variant={'ghost'} size={'sm'} aria-label={'Toggle Navigation'} />
           </Flex>
 
           <Flex flex={{ base: 1, md: 'auto' }} justify={{ base: 'center', md: 'start' }}>
@@ -52,18 +45,11 @@ export const Header = observer(() => {
           </Flex>
 
           <Stack direction={'row'} align={'center'} spacing={8} flex={{ base: 1, md: 'auto' }} justify={'flex-end'}>
-            <DesktopNav display={{ base: 'none', md: 'flex' }} />
-            <IconButton
-              size={'sm'}
-              variant={'ghost'}
-              aria-label={'Toggle Color Mode'}
-              onClick={toggleColorMode}
-              icon={colorMode == 'light' ? <IoMoon size={18} /> : <IoSunny size={18} />}
-            />
+            <DesktopNav />
+            <IconButton size={'sm'} variant={'ghost'} aria-label={'Toggle Color Mode'} onClick={toggleColorMode} icon={colorMode == 'light' ? <IoMoon size={18} /> : <IoSunny size={18} />} />
           </Stack>
         </Container>
       </Flex>
-      <MobileNav isOpen={isMobileNavOpen} />
       <WalletInfo />
     </Box>
   );

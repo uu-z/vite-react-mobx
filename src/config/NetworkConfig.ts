@@ -22,6 +22,7 @@ export const EthNetworkConfig = new EthNetworkState({
       [ETHKovanConfig.chainId]: ETHKovanConfig,
       [BSCMainnetConfig.chainId]: BSCMainnetConfig,
       [BSCTestnetConfig.chainId]: BSCTestnetConfig,
+      [IotexMainnetConfig.chainId]: IotexMainnetConfig,
       [IotexTestnetConfig.chainId]: IotexTestnetConfig
     }
   })

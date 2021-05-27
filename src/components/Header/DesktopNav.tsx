@@ -3,7 +3,6 @@ import { Stack, BoxProps, Text, Button, Box, Img } from '@chakra-ui/react';
 import { observer, useObserver, useLocalStore } from 'mobx-react-lite';
 import { useStore } from '../../store/index';
 import { helper } from '../../lib/helper';
-import { ETH, BNB, IOTX } from 'ccy-icons';
 
 export const DesktopNav = observer((props: BoxProps) => {
   const { god, lang } = useStore();
@@ -26,7 +25,7 @@ export const DesktopNav = observer((props: BoxProps) => {
   });
   return (
     <Stack direction={'row'} spacing={4} {...props}>
-      <Button>
+      <Button onClick={store.showConnecter}>
         <Img w={6} src={god.currentChain.logoUrl} />
         <Box ml={2}>{god.currentChain.name}</Box>
       </Button>

@@ -4,6 +4,7 @@ import { TokenState } from '@/store/lib/TokenState';
 export const BSCTestnetConfig = new ChainState({
   name: 'BSC Testnet',
   chainId: 97,
+  networkKey: 'bsc',
   rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545',
   logoUrl: '/images/bsc_logo.svg',
   explorerURL: 'https://testnet.bscscan.com',

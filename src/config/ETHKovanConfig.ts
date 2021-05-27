@@ -5,6 +5,7 @@ import { TokenState } from '@/store/lib/TokenState';
 export const ETHKovanConfig = new ChainState({
   name: 'Kovan',
   chainId: 42,
+  networkKey: 'eth',
   rpcUrl: `https://kovan.infura.io/v3/${publicCOnfig.infuraId}`,
   logoUrl: '/images/eth_logo.svg',
   explorerURL: 'https://kovan.etherscan.io',

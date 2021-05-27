@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer, useLocalObservable } from 'mobx-react-lite';
-import { Modal, ModalContent, ModalOverlay, List, ListItem, Image, ModalFooter, Button, Box, Input } from '@chakra-ui/react';
+import { Modal, ModalContent, ModalOverlay, List, ListItem, Image, ModalFooter, Button, Box, Input, Img } from '@chakra-ui/react';
 import { useStore } from '../../store/index';
 import { TokenState } from '../../store/lib/TokenState';
 import { StringState } from '../../store/standard/base';
-import { Text } from '@chakra-ui/layout';
+import { HStack, Text } from '@chakra-ui/layout';
 
 interface PropsType {
   isOpen: boolean;
@@ -18,9 +18,7 @@ export const TokenListModal = observer((props: PropsType) => {
     keyword: new StringState(),
     get tokens() {
       if (!token.currentTokens) return [];
-      return token.currentTokens
-        .filter((i) => (store.keyword ? i.symbol.toLowerCase().includes(store.keyword.value) : true))
-        .sort((a, b) => b.balance.value.comparedTo(a.balance.value));
+      return token.currentTokens.filter((i) => (store.keyword ? i.symbol.toLowerCase().includes(store.keyword.value) : true)).sort((a, b) => b.balance.value.comparedTo(a.balance.value));
     },
     onClose() {
       props.onClose();
