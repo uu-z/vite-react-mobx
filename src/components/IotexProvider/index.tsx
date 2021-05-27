@@ -4,11 +4,13 @@ import { useStore } from '../../store/index';
 import { IotexMulticall } from '../../lib/multicall';
 import { Contract } from 'iotex-antenna/lib/contract/contract';
 import multicallABI from './IotexMulticall.json';
+// import { fromString } from 'iotex-antenna/lib/crypto/address';
 
 export const IotexProvider = observer(() => {
   const { god } = useStore();
   useEffect(() => {
     const antenna = god.iotex.getAntenna();
+    // const multicallAddr = fromString(god.iotex.currentChain.info.multicallAddr).string();
     god.iotex.multiCall = new IotexMulticall({
       contract: new Contract(multicallABI, god.iotex.currentChain.info.multicallAddr, { provider: antenna.iotx })
     });

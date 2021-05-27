@@ -1,20 +1,8 @@
 import React from 'react';
 import { observer, useLocalStore } from 'mobx-react-lite';
-import {
-  Container,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Button,
-  Image,
-  InputGroup,
-  InputRightElement,
-  Flex,
-  Box
-} from '@chakra-ui/react';
+import { Container, FormControl, Input, Button, Image, InputGroup, InputRightElement, Flex, Box } from '@chakra-ui/react';
 import { useStore } from '../../store/index';
-import { StringState, NumberState, BooleanState } from '../../store/standard/base';
+import { StringState, BooleanState } from '../../store/standard/base';
 import { TokenListModal } from '../../components/TokenListModal/index';
 import { TokenState } from '../../store/lib/TokenState';
 import { Icon } from '@chakra-ui/react';
@@ -22,12 +10,10 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { BigNumberInputState } from '../../store/standard/BigNumberInputState';
 import { useEffect } from 'react';
 import { Text } from '@chakra-ui/layout';
-import BigNumber from 'bignumber.js';
-import { useWeb3React } from '@web3-react/core';
+import toast from 'react-hot-toast';
 
 export const ERC20 = observer(() => {
   const { god, token, lang } = useStore();
-  const { chainId } = useWeb3React();
 
   const store = useLocalStore(() => ({
     amount: new BigNumberInputState({}),
@@ -35,6 +21,7 @@ export const ERC20 = observer(() => {
     curToken: null as TokenState,
 
     isOpenTokenList: new BooleanState(),
+    loading: new BooleanState(),
     get state() {
       const valid = store.curToken && store.amount.value && store.receiverAdderss.value;
       return {
@@ -49,8 +36,14 @@ export const ERC20 = observer(() => {
       store.curToken = token;
     },
 
-    onSubmit() {
-      console.log();
+    async onSubmit() {
+      store.loading.setValue(true);
+      const res = await store.curToken.transfer({ params: [store.receiverAdderss.value, store.amount.value.toFixed(0, 1)] });
+      const receipt = await res.wait();
+      if (receipt.status) {
+        toast.success('Transfer Succeeded');
+      }
+      store.loading.setValue(false);
     }
   }));
 
@@ -61,7 +54,7 @@ export const ERC20 = observer(() => {
   }, [god.updateTicker.value]);
   return (
     <Container maxW="md">
-      <form onSubmit={store.onSubmit}>
+      <form>
         <FormControl mt={20}>
           <Box border="1px solid" borderRadius="md" borderColor="inherit">
             <Flex justify="space-between" p={2}>
@@ -69,13 +62,7 @@ export const ERC20 = observer(() => {
               <Text fontSize="sm">{store.curToken ? `Balance ${store.curToken.balance.format} ` : '...'}</Text>
             </Flex>
             <InputGroup>
-              <Input
-                border="none"
-                placeholder="0.0"
-                type="number"
-                value={store.amount.format}
-                onChange={(e) => store.amount.setFormat(e.target.value)}
-              />
+              <Input border="none" placeholder="0.0" type="number" value={store.amount.format} onChange={(e) => store.amount.setFormat(e.target.value)} />
               <InputRightElement onClick={store.openTokenList} width="4rem" cursor="pointer" flexDir="column">
                 {/* {store.curToken && <Text fontSize="sm">Balance: {store.curToken.balance.format}</Text>} */}
                 <Flex alignItems="center" pr={2} w="100%">
@@ -91,16 +78,11 @@ export const ERC20 = observer(() => {
               <Text fontSize="sm">Receiver Address</Text>
             </Flex>
             <InputGroup>
-              <Input
-                border="none"
-                placeholder={god.currentNetwork.info.token.tokenExample}
-                value={store.receiverAdderss.value}
-                onChange={(e) => store.receiverAdderss.setValue(e.target.value)}
-              />
+              <Input border="none" placeholder={god.currentNetwork.info.token.tokenExample} value={store.receiverAdderss.value} onChange={(e) => store.receiverAdderss.setValue(e.target.value)} />
             </InputGroup>
           </Box>
 
-          <Button type="submit" mt="4" disabled={!store.state.valid}>
+          <Button type="button" mt="4" disabled={!store.state.valid} onClick={store.onSubmit} isLoading={store.loading.value}>
             {store.state.msg}
           </Button>
         </FormControl>

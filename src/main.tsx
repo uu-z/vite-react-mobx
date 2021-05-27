@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import App from './index';
-import * as buffer from 'buffer';
-(window as any).Buffer = buffer;
+import { Buffer } from 'buffer';
+(globalThis as any).Buffer = Buffer;
 
 ReactDOM.render(
   <React.StrictMode>

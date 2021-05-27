@@ -9,7 +9,8 @@ export const IotexMainnetConfig = new ChainState({
   explorerURL: 'https://iotexscan.com',
   explorerName: 'IotexScan',
   info: {
-    blockPerSeconds: 5
+    blockPerSeconds: 5,
+    multicallAddr: ''
   },
   Coin: new TokenState({
     symbol: 'IOTX',

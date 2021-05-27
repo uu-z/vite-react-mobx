@@ -22,6 +22,9 @@ export const WalletSelecter = observer(() => {
       god.setNetwork('eth');
       activate(injected);
       god.eth.connector.latestProvider.save('inject');
+    },
+    connectIopay() {
+      god.setNetwork('iotex');
     }
   }));
 
@@ -44,6 +47,10 @@ export const WalletSelecter = observer(() => {
         <Button onClick={store.connectInejct} size="lg" justifyContent="space-between" alignItems="center" mt="2">
           <Text>TokenPocket</Text>
           <Image src="/images/tokenpocket.svg" />
+        </Button>
+        <Button onClick={store.connectIopay} size="lg" justifyContent="space-between" alignItems="center" mt="2">
+          <Text>Iopay</Text>
+          <Image src="/images/iotex.svg" />
         </Button>
       </ModalContent>
     </Modal>

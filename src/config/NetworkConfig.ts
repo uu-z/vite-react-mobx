@@ -37,7 +37,8 @@ export const IotexNetworkConfig = new IotexNetworkState({
   chain: new MappingState({
     currentId: IotexMainnetConfig.chainId,
     map: {
-      [IotexMainnetConfig.chainId]: IotexMainnetConfig
+      [IotexMainnetConfig.chainId]: IotexMainnetConfig,
+      [IotexTestnetConfig.chainId]: IotexTestnetConfig
     }
   })
 });

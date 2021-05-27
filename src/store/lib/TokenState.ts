@@ -3,6 +3,7 @@ import { NetworkState } from './NetworkState';
 import { BigNumberState } from '../standard/BigNumberState';
 import { CallParams } from '../../../type';
 import erc20Abi from '@/constants/abi/erc20.json';
+import { BooleanState } from '../standard/base';
 
 export class TokenState {
   abi = erc20Abi;
@@ -15,15 +16,17 @@ export class TokenState {
 
   network: NetworkState;
   balance: BigNumberState;
-  metas: {
-    isApprovingAllowance?: boolean;
+  info: {
+    loading: BooleanState;
     [key: string]: any;
-  } = {};
+  } = {
+    loading: new BooleanState()
+  };
   constructor(args: Partial<TokenState>) {
     Object.assign(this, args);
     this.balance = new BigNumberState({ decimals: this.decimals, loading: true });
     makeObservable(this, {
-      metas: observable
+      info: observable
     });
   }
 

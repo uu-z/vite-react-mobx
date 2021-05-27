@@ -16,8 +16,7 @@ export class GodStore {
     currentId: 'eth',
     map: {
       eth: EthNetworkConfig,
-      bsc: EthNetworkConfig,
-      iotex: EthNetworkConfig
+      iotex: IotexNetworkConfig
     }
   });
 
