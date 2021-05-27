@@ -31,12 +31,11 @@ export const WalletSelecter = observer(() => {
     close() {
       god.eth.connector.showConnector = false;
     },
-    setChain(val) {
-      god.setChain(val);
+    async setChain(val) {
       const chain = god.currentNetwork.chain.map[val];
       console.log(chain);
       if (chain.networkKey !== 'eth') {
-        metamaskUtils.setupNetwork({
+        await metamaskUtils.setupNetwork({
           chainId: chain.chainId,
           blockExplorerUrls: [chain.explorerURL],
           chainName: chain.name,
@@ -47,6 +46,7 @@ export const WalletSelecter = observer(() => {
           },
           rpcUrls: [chain.rpcUrl]
         });
+        god.setChain(val);
       } else {
         toast({ title: 'Please connect to the  Ethereum network on metamask.', position: 'top', status: 'warning' });
       }
