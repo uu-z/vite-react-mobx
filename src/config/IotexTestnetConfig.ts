@@ -2,7 +2,7 @@ import { ChainState } from '@/store/lib/ChainState';
 import { TokenState } from '@/store/lib/TokenState';
 
 export const IotexTestnetConfig = new ChainState({
-  name: 'IoTex Testnet',
+  name: 'IoTeX Testnet',
   chainId: 4690,
   networkKey: 'iotex',
   rpcUrl: `https://babel-api.testnet.iotex.io`,

@@ -2,7 +2,7 @@ import { TokenState } from '@/store/lib/TokenState';
 import { ChainState } from '../store/lib/ChainState';
 
 export const IotexMainnetConfig = new ChainState({
-  name: 'Iotex',
+  name: 'IoteX',
   chainId: 4689,
   networkKey: 'iotex',
   rpcUrl: 'https://api.iotex.one:443',
