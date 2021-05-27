@@ -6,6 +6,7 @@ export class ChainState {
   name: string;
   network: NetworkState;
   chainId: number;
+  logoUrl: string;
   rpcUrl: string;
   explorerName: string;
   explorerURL: string;

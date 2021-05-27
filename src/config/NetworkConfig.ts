@@ -6,10 +6,10 @@ import { ETHMainnetConfig } from './ETHMainnetConfig';
 import { BSCTestnetConfig } from './BSCTestnetConfig';
 import { IotexNetworkState } from '../store/lib/IotexNetworkState';
 import { IotexMainnetConfig } from './IotexMainnetConfig';
-import { ETHIotexTestnetConfig } from './ETHIotexTestnetConfig';
+import { IotexTestnetConfig } from './IotexTestnetConfig';
 
 export const EthNetworkConfig = new EthNetworkState({
-  allowChains: [BSCMainnetConfig.chainId, BSCTestnetConfig.chainId, ETHMainnetConfig.chainId, ETHKovanConfig.chainId, ETHIotexTestnetConfig.chainId],
+  allowChains: [BSCMainnetConfig.chainId, BSCTestnetConfig.chainId, ETHMainnetConfig.chainId, ETHKovanConfig.chainId, IotexTestnetConfig.chainId],
   info: {
     token: {
       tokenExample: '0x000000000000000000000000000000000000000'
@@ -22,7 +22,7 @@ export const EthNetworkConfig = new EthNetworkState({
       [ETHKovanConfig.chainId]: ETHKovanConfig,
       [BSCMainnetConfig.chainId]: BSCMainnetConfig,
       [BSCTestnetConfig.chainId]: BSCTestnetConfig,
-      [ETHIotexTestnetConfig.chainId]: ETHIotexTestnetConfig
+      [IotexTestnetConfig.chainId]: IotexTestnetConfig
     }
   })
 });

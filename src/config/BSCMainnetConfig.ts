@@ -5,6 +5,7 @@ export const BSCMainnetConfig = new ChainState({
   name: 'BSC',
   chainId: 56,
   rpcUrl: 'https://bsc-dataseed.binance.org',
+  logoUrl: '/images/bsc_logo.svg',
   explorerURL: 'https://bscscan.com',
   explorerName: 'BscScan',
   Coin: new TokenState({

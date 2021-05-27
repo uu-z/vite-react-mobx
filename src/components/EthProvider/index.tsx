@@ -13,7 +13,7 @@ import { _ } from '@/lib/lodash';
 import { BSCMainnetConfig } from '../../config/BSCMainnetConfig';
 import { BSCTestnetConfig } from '../../config/BSCTestnetConfig';
 import { ETHKovanConfig } from '../../config/ETHKovanConfig';
-import { ETHIotexTestnetConfig } from '../../config/ETHIotexTestnetConfig';
+import { IotexTestnetConfig } from '../../config/IotexTestnetConfig';
 
 export const ETHProvider = observer(({ children }) => {
   const { god, base, lang } = useStore();
@@ -44,7 +44,7 @@ export const ETHProvider = observer(({ children }) => {
       if ([BSCMainnetConfig.chainId, BSCTestnetConfig.chainId].includes(chainId)) {
         god.setNetwork('bsc');
       }
-      if ([ETHIotexTestnetConfig.chainId].includes(chainId)) {
+      if ([IotexTestnetConfig.chainId].includes(chainId)) {
         god.setNetwork('iotex');
       }
     } else {

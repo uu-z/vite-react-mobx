@@ -19,7 +19,7 @@ export const TokenListModal = observer((props: PropsType) => {
     get tokens() {
       if (!token.currentTokens) return [];
       return token.currentTokens
-        .filter((i) => i.symbol.toLowerCase().includes(store.keyword.value))
+        .filter((i) => (store.keyword ? i.symbol.toLowerCase().includes(store.keyword.value) : true))
         .sort((a, b) => b.balance.value.comparedTo(a.balance.value));
     },
     onClose() {

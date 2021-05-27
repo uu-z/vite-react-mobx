@@ -6,6 +6,7 @@ export const ETHMainnetConfig = new ChainState({
   name: 'ETH',
   chainId: 1,
   rpcUrl: `https://mainnet.infura.io/v3/${publicCOnfig.infuraId}`,
+  logoUrl: '/images/eth_logo.svg',
   explorerURL: 'https://etherscan.io',
   explorerName: 'EtherScan',
   Coin: new TokenState({

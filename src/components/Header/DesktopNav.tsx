@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, BoxProps, Text, Button, Box } from '@chakra-ui/react';
+import { Stack, BoxProps, Text, Button, Box, Img } from '@chakra-ui/react';
 import { observer, useObserver, useLocalStore } from 'mobx-react-lite';
 import { useStore } from '../../store/index';
 import { helper } from '../../lib/helper';
@@ -17,17 +17,6 @@ export const DesktopNav = observer((props: BoxProps) => {
       god.currentNetwork.walletInfo.visible = true;
     }
   }));
-  const NetowrkIcon = useObserver(() => {
-    if (god.network.currentId.value == 'iotex') {
-      return <IOTX />;
-    }
-    if (god.network.currentId.value == 'eth') {
-      return <ETH />;
-    }
-    if (god.network.currentId.value == 'bsc') {
-      return <BNB />;
-    }
-  });
 
   const accountView = useObserver(() => {
     if (!god.currentNetwork.account) {
@@ -38,7 +27,7 @@ export const DesktopNav = observer((props: BoxProps) => {
   return (
     <Stack direction={'row'} spacing={4} {...props}>
       <Button>
-        <Box minW={5}>{NetowrkIcon}</Box>
+        <Img w={6} src={god.currentChain.logoUrl} />
         <Box ml={2}>{god.currentChain.name}</Box>
       </Button>
       {accountView}

@@ -5,6 +5,7 @@ export const BSCTestnetConfig = new ChainState({
   name: 'BSC Testnet',
   chainId: 97,
   rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+  logoUrl: '/images/bsc_logo.svg',
   explorerURL: 'https://testnet.bscscan.com',
   explorerName: 'BscScan',
   Coin: new TokenState({

@@ -6,15 +6,14 @@ import { ChainState } from './lib/ChainState';
 import { EthNetworkState } from './lib/EthNetworkState';
 import { IotexNetworkState } from './lib/IotexNetworkState';
 import { RootStore } from './root';
-import { StorageState } from './standard/StorageState';
 import { NumberState } from './standard/base';
 
 export type Network = 'eth' | 'bsc' | 'iotex';
 
 export class GodStore {
   rootStore: RootStore;
-  network: MappingStorageState<NetworkState> = new MappingStorageState({
-    currentId: new StorageState({ default: 'eth', key: 'latestNetowrk' }),
+  network: MappingState<NetworkState> = new MappingState({
+    currentId: 'eth',
     map: {
       eth: EthNetworkConfig,
       bsc: EthNetworkConfig,
@@ -62,7 +61,7 @@ export class GodStore {
   }
 
   setNetwork(val: Network) {
-    this.network.currentId.save(val);
+    this.network.setCurrentId(val);
   }
   setChain(val: number) {
     this.currentNetwork.chain.setCurrentId(val);
