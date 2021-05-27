@@ -9,6 +9,7 @@ import { RootStore } from './root';
 import { NumberState } from './standard/base';
 import { metamaskUtils } from '../lib/metaskUtils';
 import toast from 'react-hot-toast';
+import { eventBus } from '../lib/event';
 
 export type Network = 'eth' | 'bsc' | 'iotex';
 
@@ -65,6 +66,7 @@ export class GodStore {
   }
   setChain(val: number) {
     this.currentNetwork.chain.setCurrentId(val);
+    eventBus.emit('chain.switch');
   }
   setShowConnecter(value: boolean) {
     this.eth.connector.showConnector = value;

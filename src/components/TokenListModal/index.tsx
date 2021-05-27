@@ -5,6 +5,7 @@ import { useStore } from '../../store/index';
 import { TokenState } from '../../store/lib/TokenState';
 import { StringState } from '../../store/standard/base';
 import { HStack, Text } from '@chakra-ui/layout';
+import VirtualList from 'react-tiny-virtual-list';
 
 interface PropsType {
   isOpen: boolean;
@@ -18,7 +19,7 @@ export const TokenListModal = observer((props: PropsType) => {
     keyword: new StringState(),
     get tokens() {
       if (!token.currentTokens) return [];
-      return token.currentTokens.filter((i) => (store.keyword ? i.symbol.toLowerCase().includes(store.keyword.value) : true)).sort((a, b) => b.balance.value.comparedTo(a.balance.value));
+      return token.currentTokens.filter((i) => (store.keyword ? i.symbol.toLowerCase().includes(store.keyword.value) : true));
     },
     onClose() {
       props.onClose();
@@ -36,19 +37,30 @@ export const TokenListModal = observer((props: PropsType) => {
         <Box p={4}>
           <Input placeholder="Search name " value={store.keyword.value} onChange={(e) => store.keyword.setValue(e.target.value)} />
         </Box>
-        <List spacing={5} padding={4} maxH="500px" overflowY="scroll">
-          {store.tokens.map((i) => (
-            <ListItem cursor="pointer" display="flex" alignItems="center" justifyContent="space-between" onClick={() => store.onSelect(i)}>
-              <Box display="flex" alignItems="center">
-                <Image borderRadius="full" boxSize="24px" src={i.logoURI} mr="4" fallbackSrc="https://via.placeholder.com/150" />
-                {i.symbol}
-              </Box>
-              <Box>
-                <Text>{i.balance.format}</Text>
-              </Box>
-            </ListItem>
-          ))}
-        </List>
+        <Box ml={4}>
+          <VirtualList
+            width="100%"
+            height={600}
+            itemSize={50}
+            style={{ paddingRight: '15px' }}
+            itemCount={store.tokens.length}
+            renderItem={({ index, style }) => {
+              const i = store.tokens[index];
+
+              return (
+                <ListItem my={2} key={index} {...style} cursor="pointer" display="flex" alignItems="center" justifyContent="space-between" onClick={() => store.onSelect(i)}>
+                  <Box display="flex" alignItems="center">
+                    <Image borderRadius="full" boxSize="24px" src={i.logoURI} mr="4" fallbackSrc="https://via.placeholder.com/150" />
+                    {i.symbol}
+                  </Box>
+                  <Box>
+                    <Text>{i.balance.format}</Text>
+                  </Box>
+                </ListItem>
+              );
+            }}
+          />
+        </Box>
       </ModalContent>
     </Modal>
   );

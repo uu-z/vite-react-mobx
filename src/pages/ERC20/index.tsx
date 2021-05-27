@@ -11,6 +11,7 @@ import { BigNumberInputState } from '../../store/standard/BigNumberInputState';
 import { useEffect } from 'react';
 import { Text } from '@chakra-ui/layout';
 import toast from 'react-hot-toast';
+import { eventBus } from '../../lib/event';
 
 export const ERC20 = observer(() => {
   const { god, token, lang } = useStore();
@@ -51,6 +52,9 @@ export const ERC20 = observer(() => {
     if (god.currentNetwork.account) {
       token.loadPrivateData();
     }
+    eventBus.on('chain.switch', () => {
+      store.curToken = null;
+    });
   }, [god.updateTicker.value]);
   return (
     <Container maxW="md">

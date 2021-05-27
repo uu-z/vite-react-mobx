@@ -26,7 +26,7 @@ export const WalletSelecter = observer(() => {
       return god.eth.connector.showConnector;
     },
     get netowkrs() {
-      return publicCOnfig.isProd ? [BSCMainnetConfig, ETHMainnetConfig, IotexMainnetConfig] : [BSCTestnetConfig, ETHKovanConfig, IotexTestnetConfig];
+      return [BSCMainnetConfig, ETHMainnetConfig, IotexTestnetConfig];
     },
     close() {
       god.eth.connector.showConnector = false;

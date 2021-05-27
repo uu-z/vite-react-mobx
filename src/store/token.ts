@@ -18,12 +18,8 @@ export class TokenStore {
     this.rootStore = rootStore;
     this.tokens = {
       [BSCMainnetConfig.chainId]: pancakeTokenList.tokens.map((i) => new TokenState({ ...i, network: EthNetworkConfig })),
-      [ETHMainnetConfig.chainId]: uniswapTokenList.tokens
-        .filter((i) => i.chainId == ETHMainnetConfig.chainId)
-        .map((i) => new TokenState({ ...i, network: EthNetworkConfig })),
-      [ETHKovanConfig.chainId]: uniswapTokenList.tokens
-        .filter((i) => i.chainId == ETHKovanConfig.chainId)
-        .map((i) => new TokenState({ ...i, network: EthNetworkConfig })),
+      [ETHMainnetConfig.chainId]: uniswapTokenList.tokens.filter((i) => i.chainId == ETHMainnetConfig.chainId).map((i) => new TokenState({ ...i, network: EthNetworkConfig })),
+      [ETHKovanConfig.chainId]: uniswapTokenList.tokens.filter((i) => i.chainId == ETHKovanConfig.chainId).map((i) => new TokenState({ ...i, network: EthNetworkConfig })),
       [IotexTestnetConfig.chainId]: iotexTestnetTokenlist.tokens.map((i) => new TokenState({ ...i, network: EthNetworkConfig }))
     };
     makeAutoObservable(this, {
@@ -39,13 +35,17 @@ export class TokenStore {
   }
 
   get currentTokens() {
+    console.log(123);
     return this.tokens[this.rootStore.god.currentChain.chainId];
+  }
+  set currentTokens(val) {
+    this.tokens[this.rootStore.god.currentChain.chainId] = val;
   }
 
   async loadPrivateData() {
     if (!this.god.currentNetwork.account) return;
-    await this.currentNetwork.multicall([
-      ...this.currentTokens.map((i) => i.preMulticall({ method: 'balanceOf', params: [this.currentNetwork.account], handler: i.balance }))
-    ]);
+    await this.currentNetwork.multicall([...this.currentTokens.map((i) => i.preMulticall({ method: 'balanceOf', params: [this.currentNetwork.account], handler: i.balance }))]);
+
+    this.currentTokens = this.currentTokens.sort((a, b) => b.balance.value.comparedTo(a.balance.value));
   }
 }
