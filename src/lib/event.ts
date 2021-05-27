@@ -5,6 +5,7 @@ interface MessageEvents {
   'amount.refetch': () => void;
   'loading.confirm': () => void;
   'loading.cancel': () => void;
+  'wallet.onAccount': () => void;
   'wallet.logout': () => void;
   'pendingPool.confirm': () => void;
   'pendingPool.cacel': () => void;

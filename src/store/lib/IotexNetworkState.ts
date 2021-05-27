@@ -13,6 +13,12 @@ import { Contract } from 'iotex-antenna/lib/contract/contract';
 import retry from 'promise-retry';
 import { GodStore } from '../god';
 import { CallParams } from '../../../type';
+import { helper } from '../../lib/helper';
+import { JsBridgeSignerMobile } from '../../lib/js-plugin';
+import toast from 'react-hot-toast';
+import { hooks } from '../../lib/hooks';
+import { rootStore } from '../index';
+import { eventBus } from '../../lib/event';
 
 export enum IotexConnector {
   IopayDesktop = 'iopay-desktop',
@@ -54,10 +60,19 @@ export class IotexNetworkState implements NetworkState {
     this.currentChain.Coin.balance.setValue(new BigNumber(accountMeta.balance.toString()));
   }
 
-  activeConnector(connector: IotexConnector) {
+  activeConnector() {
     if (this.antenna) {
       delete this.antenna;
     }
+    toast.promise(
+      hooks.waitAccount(5000),
+      {
+        loading: helper.env.isIopayMobile ? rootStore.lang.t('connector.loading.mobile') : rootStore.lang.t('connector.loading'),
+        success: rootStore.lang.t('connector.success'),
+        error: rootStore.lang.t('connector.failed')
+      },
+      { id: 'connector' }
+    );
     this.initAntenna();
   }
 
@@ -68,6 +83,7 @@ export class IotexNetworkState implements NetworkState {
       }, 100);
     }
     this.account = this.getAntenna().iotx.accounts[0].address;
+    eventBus.emit('wallet.onAccount');
   }
 
   getAntenna() {
@@ -75,13 +91,10 @@ export class IotexNetworkState implements NetworkState {
       return this.antenna;
     }
     let signer;
-    if (this.connector.latestProvider.value == IotexConnector.IopayExtension) {
-      //@ts-ignore
-      signer = window.antennaSigner;
-    } else if (this.connector.latestProvider.value == IotexConnector.IopayDesktop) {
+    if (helper.env.isIopayMobile) {
+      signer = new JsBridgeSignerMobile();
+    } else {
       signer = new WsSignerPlugin();
-      // } else if (GodUtils.isMobile) {
-      // signer = new JsBridgeSignerMobile();
     }
 
     const antenna = signer ? new Antenna(this.currentChain.rpcUrl, { signer }) : new Antenna(this.currentChain.rpcUrl);
@@ -92,10 +105,7 @@ export class IotexNetworkState implements NetworkState {
   async execContract({ address, abi, method, params = [], options = {}, read }: CallParams): Promise<Partial<TransactionResponse>> {
     const contract = new Contract(abi, address, { provider: this.antenna.iotx, signer: this.antenna.iotx.signer });
     const { value, ..._options } = options;
-    const hash = await contract.methods[method](
-      ...params,
-      Object.assign({ gasLimit: '2000000', gasPrice: '1000000000000', account: this.account, amount: value || '0' }, _options)
-    );
+    const hash = await contract.methods[method](...params, Object.assign({ gasLimit: '2000000', gasPrice: '1000000000000', account: this.account, amount: value || '0' }, _options));
     if (read) {
       return hash;
     }

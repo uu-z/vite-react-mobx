@@ -15,8 +15,7 @@ export class GodStore {
   network: MappingState<NetworkState> = new MappingState({
     currentId: 'eth',
     map: {
-      eth: EthNetworkConfig,
-      iotex: IotexNetworkConfig
+      eth: EthNetworkConfig
     }
   });
 
@@ -66,7 +65,6 @@ export class GodStore {
     this.currentNetwork.chain.setCurrentId(val);
   }
   setShowConnecter(value: boolean) {
-    // this.currentNetwork.connector.showConnector = value;
     this.eth.connector.showConnector = value;
   }
 }

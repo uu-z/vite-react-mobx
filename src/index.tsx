@@ -43,7 +43,6 @@ export const App = observer(() => {
         <Web3ReactProvider getLibrary={getLibrary}>
           <WalletSelecter />
           <ETHProvider />
-          <IotexProvider />
           <Toaster />
           <Router>
             <Header />
