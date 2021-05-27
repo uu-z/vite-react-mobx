@@ -3,7 +3,7 @@ import { ChainState } from '@/store/lib/ChainState';
 import { TokenState } from '@/store/lib/TokenState';
 
 export const ETHKovanConfig = new ChainState({
-  name: 'Kovan',
+  name: 'ETH Kovan',
   chainId: 42,
   networkKey: 'eth',
   rpcUrl: `https://kovan.infura.io/v3/${publicCOnfig.infuraId}`,
