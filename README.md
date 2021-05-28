@@ -27,12 +27,6 @@ that generates the follow:
 }
 ```
 
-### Editorconfig
-
-I have decided to include my `.editorconfig` file to help spread this nice tool. This file defines coding styles mantaining it consistent between multiple developers and their various Text Editors and IDEs.
-
-Learn more about [Editorconfig](https://editorconfig.org/).
-
 ## Installation
 
 Clone the repo and run `yarn install`
@@ -44,7 +38,3 @@ After the successfull installation of the packages: `yarn start`
 ## Tests
 
 You can build tests with Cypress. I wrote a small test to see if it's enabled. You can run it with `yarn test`
-
-## Contact
-
-Feel free to contact me on [Twitter](https://twitter.com/dieman_) or [Discord](https://discordapp.com/users/160512379510194187)
